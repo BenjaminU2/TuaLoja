@@ -4,11 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Carrinho de Compras — TG1 ASI 2026</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Poppins', sans-serif;
       background-color: #f0f2f5;
       color: #222;
     }
@@ -239,17 +242,24 @@
     }
 
     #btn-encerrar {
-      margin-top: 14px;
-      width: 100%;
-      padding: 11px;
-      background-color: #e74c3c;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 14px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+  margin-top: 14px;
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #ff2e2e, #ff0000); /* 🔥 vermelho vibrante */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+#btn-encerrar:hover {
+  background: linear-gradient(135deg, #ff0000, #cc0000);
+  transform: scale(1.03);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
 
     #btn-encerrar:hover { background-color: #c0392b; }
 
@@ -264,7 +274,6 @@
     <span class="logo">🛒</span>
     <div>
       <h1>Loja Online — Carrinho de Compras</h1>
-      <p>TG1 · ASI 2026 · ISUTC · Docente: Ivan Ruby · Padrão MVC</p>
     </div>
     <span class="badge-ls">💾 localStorage activo</span>
   </header>
