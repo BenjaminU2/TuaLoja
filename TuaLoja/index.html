@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrinho de Compras — TG1 ASI 2026</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f2f5;
+      color: #222;
+    }
+
+    header {
+      background-color: #1a3a5c;
+      color: white;
+      padding: 16px 32px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    header .logo {
+      font-size: 28px;
+    }
+
+    header h1 { font-size: 20px; }
+
+    header p { font-size: 12px; color: #a8c4e0; margin-top: 2px; }
+
+    .badge-ls {
+      margin-left: auto;
+      background: #27ae60;
+      color: white;
+      font-size: 11px;
+      font-weight: bold;
+      padding: 4px 10px;
+      border-radius: 12px;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      padding: 26px 32px;
+      max-width: 1080px;
+      margin: 0 auto;
+    }
+
+    .coluna { display: flex; flex-direction: column; gap: 22px; }
+
+    section {
+      background: white;
+      border-radius: 8px;
+      border: 1px solid #dde3ea;
+      padding: 22px;
+    }
+
+    section h2 {
+      font-size: 15px;
+      font-weight: bold;
+      color: #1a3a5c;
+      margin-bottom: 16px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #e8edf2;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Formulário */
+    .campo { margin-bottom: 14px; }
+
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 4px;
+      color: #555;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 14px;
+      transition: border-color 0.2s;
+    }
+
+    input:focus { outline: none; border-color: #1a3a5c; }
+
+    .erro-msg {
+      font-size: 11px;
+      margin-top: 3px;
+      min-height: 15px;
+    }
+
+    .btn-primario {
+      width: 100%;
+      padding: 10px;
+      background-color: #1a3a5c;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .btn-primario:hover { background-color: #25527f; }
+
+    #mensagem-global {
+      display: none;
+      margin-top: 10px;
+      font-size: 13px;
+      font-weight: bold;
+      text-align: center;
+      padding: 8px;
+      border-radius: 4px;
+      background: #f0fff4;
+    }
+
+    /* Nota localStorage */
+    .nota-ls {
+      font-size: 11px;
+      color: #27ae60;
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    /* Listas */
+    ul { list-style: none; padding: 0; }
+
+    .item-vazio {
+      font-size: 13px;
+      color: #aaa;
+      text-align: center;
+      padding: 20px 0;
+    }
+
+    /* Produto item */
+    .produto-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .produto-item:last-child { border-bottom: none; }
+
+    .produto-info { display: flex; flex-direction: column; gap: 2px; }
+
+    .produto-nome { font-size: 14px; font-weight: bold; color: #222; }
+
+    .produto-preco { font-size: 12px; color: #27ae60; font-weight: bold; }
+
+    .btn-add {
+      background-color: #27ae60;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .btn-add:hover { background-color: #1e8449; }
+
+    /* Carrinho item */
+    .carrinho-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #f0f0f0;
+      gap: 8px;
+    }
+
+    .carrinho-item:last-child { border-bottom: none; }
+
+    .carrinho-info { display: flex; flex-direction: column; gap: 2px; flex: 1; }
+
+    .carrinho-nome { font-size: 14px; font-weight: bold; }
+
+    .carrinho-qtd { font-size: 11px; color: #888; }
+
+    .carrinho-subtotal {
+      font-size: 13px;
+      color: #1a3a5c;
+      font-weight: bold;
+      min-width: 80px;
+      text-align: right;
+    }
+
+    .btn-remover {
+      background: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 5px 9px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .btn-remover:hover { background-color: #c0392b; }
+
+    /* Totais */
+    .totais {
+      margin-top: 16px;
+      padding: 14px;
+      background: #f7f9fc;
+      border-radius: 6px;
+      border: 1px solid #e0e7ef;
+    }
+
+    .totais p {
+      font-size: 14px;
+      margin-bottom: 6px;
+      color: #444;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .totais p:last-child { margin-bottom: 0; }
+
+    .totais span {
+      font-weight: bold;
+      color: #1a3a5c;
+      font-size: 15px;
+    }
+
+    #btn-encerrar {
+      margin-top: 14px;
+      width: 100%;
+      padding: 11px;
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #btn-encerrar:hover { background-color: #c0392b; }
+
+    @media (max-width: 680px) {
+      main { grid-template-columns: 1fr; padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <span class="logo">🛒</span>
+    <div>
+      <h1>Loja Online — Carrinho de Compras</h1>
+      <p>TG1 · ASI 2026 · ISUTC · Docente: Ivan Ruby · Padrão MVC</p>
+    </div>
+    <span class="badge-ls">💾 localStorage activo</span>
+  </header>
+
+  <main>
+
+    <!-- COLUNA ESQUERDA -->
+    <div class="coluna">
+
+      <!-- Formulário — cadastrar produto -->
+      <section>
+        <h2>📦 Cadastrar Produto</h2>
+        <form id="form-produto">
+          <div class="campo">
+            <label for="input-nome">Nome do Produto</label>
+            <input type="text" id="input-nome" placeholder="Ex: Camisa Azul">
+            <p class="erro-msg" id="input-nome-erro"></p>
+          </div>
+          <div class="campo">
+            <label for="input-preco">Preço (MT)</label>
+            <input type="number" id="input-preco" placeholder="Ex: 250.00" min="0.01" step="0.01">
+            <p class="erro-msg" id="input-preco-erro"></p>
+          </div>
+          <button type="submit" class="btn-primario">Adicionar Produto</button>
+          <p id="mensagem-global"></p>
+          <p class="nota-ls">💾 Os produtos são guardados automaticamente no navegador</p>
+        </form>
+      </section>
+
+      <!-- Lista de produtos disponíveis -->
+      <section>
+        <h2>🏪 Produtos Disponíveis</h2>
+        <ul id="lista-produtos"></ul>
+      </section>
+
+    </div>
+
+    <!-- COLUNA DIREITA: Carrinho -->
+    <section>
+      <h2>🛒 Carrinho de Compras</h2>
+      <ul id="lista-carrinho"></ul>
+
+      <div class="totais">
+        <p>Total de produtos: <span id="total-qtd">0</span></p>
+        <p>Total a pagar: <span id="total-valor">MT 0.00</span></p>
+      </div>
+
+      <button id="btn-encerrar">🔴 Encerrar Compra</button>
+    </section>
+
+  </main>
+
+  <!--
+    Ordem de carregamento:
+    1. model.js      — dados, lógica e localStorage
+    2. view.js       — renderização DOM
+    3. controller.js — eventos e coordenação
+  -->
+  <script src="js/model.js"></script>
+  <script src="js/view.js"></script>
+  <script src="js/controller.js"></script>
+
+</body>
+</html>
