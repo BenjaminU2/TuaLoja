@@ -10,6 +10,20 @@ function actualizarVista() {
 
 function inicializar() {
 
+  // ── Abrir/fechar carrinho ───────────────────────
+let btnCarrinho = document.getElementById("btn-carrinho");
+let sidebar = document.getElementById("carrinho-sidebar");
+
+btnCarrinho.addEventListener("click", function() {
+  sidebar.classList.toggle("aberto");
+});
+
+let btnFechar = document.getElementById("fechar-carrinho");
+
+btnFechar.addEventListener("click", function() {
+  sidebar.classList.remove("aberto");
+});
+
   // ── Evento: submeter formulário de produto ────────────────
   let form = document.getElementById("form-produto");
   form.addEventListener("submit", function(event) {
