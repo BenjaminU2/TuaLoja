@@ -140,6 +140,8 @@ function renderizarCarrinho(carrinho) {
   // Atualiza os totais na interface após renderizar o carrinho
   document.getElementById("total-qtd").innerText = totalQuantidade();
   document.getElementById("total-valor").innerText = "MT " + totalValor().toFixed(2);
+  // Actualizar contador no botão do carrinho (header)
+document.getElementById("carrinho-count").innerText = totalQuantidade();
 }
 
 /**
