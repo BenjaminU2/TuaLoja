@@ -3,81 +3,190 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Carrinho de Compras — TG1 ASI 2026</title>
+    <title>AzureMart Store — Carrinho de Compras | TG1 ASI 2026</title>
+    
+    <!-- Meta tags para SEO e compartilhamento -->
+    <meta name="description" content="TG1 ASI 2026 - Sistema de Carrinho de Compras com MVC e localStorage" />
+    <meta name="author" content="ISUTC · ASI 2026" />
+    <meta name="theme-color" content="#1a3a5c" />
+    
+    <!-- Preload da fonte para melhor performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
+    <!-- ============================== -->
+    <!-- CABEÇALHO PRINCIPAL            -->
+    <!-- ============================== -->
     <header>
-      <div>
-        <h1>AzureMart Store</h1>
-        <p>TG1 · ASI 2026 · ISUTC · Docente: Ivan Ruby · Padrão MVC</p>
+      <div class="header-info">
+        <h1>
+          <span class="logo-icon" aria-hidden="true">🛒</span>
+          AzureMart Store
+        </h1>
+        <p class="header-subtitle">
+          TG1 · ASI 2026 · ISUTC · Docente: Ivan Ruby · Padrão MVC
+        </p>
       </div>
-      <button id="btn-carrinho" class="carrinho-icon">
-        🛒 <span id="carrinho-count" class="carrinho-count">0</span>
+      
+      <!-- Botão do carrinho com contador -->
+      <button 
+        id="btn-carrinho" 
+        class="carrinho-icon" 
+        aria-label="Abrir carrinho de compras"
+        title="Ver carrinho"
+      >
+        <span class="cart-icon" aria-hidden="true">🛒</span>
+        <span id="carrinho-count" class="carrinho-count">0</span>
       </button>
     </header>
 
     <main>
-      <!-- COLUNA ESQUERDA -->
+      <!-- ============================== -->
+      <!-- COLUNA ESQUERDA                -->
+      <!-- ============================== -->
       <div class="coluna">
-        <!-- Formulário — cadastrar produto -->
-        <section>
-          <h2>Cadastrar Produto</h2>
-          <form id="form-produto">
+        
+        <!-- =========================== -->
+        <!-- FORMULÁRIO DE CADASTRO      -->
+        <!-- =========================== -->
+        <section aria-labelledby="titulo-cadastro">
+          <h2 id="titulo-cadastro">📦 Cadastrar Produto</h2>
+          
+          <form id="form-produto" novalidate>
             <div class="campo">
-              <label for="input-nome">Nome do Produto</label>
+              <label for="input-nome">
+                Nome do Produto
+                <span class="campo-obrigatorio" aria-hidden="true">*</span>
+              </label>
               <input
                 type="text"
                 id="input-nome"
+                name="nome"
                 placeholder="Ex: Camisa Azul"
+                required
+                autocomplete="off"
+                aria-describedby="input-nome-erro"
               />
-              <p class="erro-msg" id="input-nome-erro"></p>
+              <p class="erro-msg" id="input-nome-erro" role="alert"></p>
             </div>
+            
             <div class="campo">
-              <label for="input-preco">Preço (MT)</label>
+              <label for="input-preco">
+                Preço (MT)
+                <span class="campo-obrigatorio" aria-hidden="true">*</span>
+              </label>
               <input
                 type="number"
                 id="input-preco"
+                name="preco"
                 placeholder="Ex: 250.00"
                 min="0.01"
                 step="0.01"
+                required
+                aria-describedby="input-preco-erro"
               />
-              <p class="erro-msg" id="input-preco-erro"></p>
+              <p class="erro-msg" id="input-preco-erro" role="alert"></p>
             </div>
-            <button type="submit" class="btn-primario">
+            
+            <button 
+              type="submit" 
+              class="btn-primario"
+              aria-label="Adicionar novo produto à lista"
+            >
+              <span class="btn-icon" aria-hidden="true">➕</span>
               Adicionar Produto
             </button>
-            <p id="mensagem-global"></p>
+            
+            <!-- Mensagem de feedback (sucesso/erro) -->
+            <p 
+              id="mensagem-global" 
+              class="mensagem-feedback" 
+              role="status" 
+              aria-live="polite"
+            ></p>
+            
             <p class="nota-ls">
+              <span aria-hidden="true">💾</span>
               Os produtos são guardados automaticamente no navegador
             </p>
           </form>
         </section>
 
-        <!-- Lista de produtos disponíveis -->
-        <section>
-          <h2>Produtos Disponíveis</h2>
-          <ul id="lista-produtos"></ul>
+        <!-- =========================== -->
+        <!-- LISTA DE PRODUTOS           -->
+        <!-- =========================== -->
+        <section aria-labelledby="titulo-produtos">
+          <h2 id="titulo-produtos">🏪 Produtos Disponíveis</h2>
+          
+          <!-- Mensagem para leitores de tela quando lista é atualizada -->
+          <div id="sr-anuncio" class="sr-only" role="status" aria-live="polite"></div>
+          
+          <ul 
+            id="lista-produtos" 
+            aria-label="Lista de produtos cadastrados"
+          ></ul>
         </section>
+        
       </div>
     </main>
 
-    <!-- Sidebar do Carrinho (fora do main) -->
-    <div id="carrinho-sidebar" class="carrinho-sidebar">
-      <button class="fechar-carrinho" id="fechar-carrinho">✕</button>
-      <section>
-        <h2>🛒 Carrinho de Compras</h2>
-        <ul id="lista-carrinho"></ul>
+    <!-- ============================== -->
+    <!-- SIDEBAR DO CARRINHO            -->
+    <!-- ============================== -->
+    <aside 
+      id="carrinho-sidebar" 
+      class="carrinho-sidebar" 
+      aria-label="Carrinho de compras"
+      role="dialog"
+      aria-modal="true"
+      hidden
+    >
+      <!-- Botão para fechar o carrinho -->
+      <button 
+        class="fechar-carrinho" 
+        id="fechar-carrinho"
+        aria-label="Fechar carrinho"
+        title="Fechar"
+      >
+        ✕
+      </button>
+      
+      <section aria-labelledby="titulo-carrinho">
+        <h2 id="titulo-carrinho">🛒 Carrinho de Compras</h2>
+        
+        <ul 
+          id="lista-carrinho" 
+          aria-label="Itens no carrinho"
+        ></ul>
 
-        <div class="totais">
-          <p>Total de produtos: <span id="total-qtd">0</span></p>
-          <p>Total a pagar: <span id="total-valor">MT 0.00</span></p>
+        <div class="totais" aria-live="polite">
+          <p>
+            <span class="totais-label">Total de produtos:</span>
+            <span id="total-qtd" class="totais-valor">0</span>
+          </p>
+          <p>
+            <span class="totais-label">Total a pagar:</span>
+            <span id="total-valor" class="totais-valor">MT 0.00</span>
+          </p>
         </div>
 
-        <button id="btn-encerrar">🔴 Encerrar Compra</button>
+        <button 
+          id="btn-encerrar" 
+          class="btn-encerrar"
+          aria-label="Encerrar compra e limpar carrinho"
+        >
+          <span class="btn-icon" aria-hidden="true">🔴</span>
+          Encerrar Compra
+        </button>
       </section>
-    </div>
+    </aside>
+    
+    <!-- Overlay para quando o carrinho está aberto -->
+    <div id="overlay" class="overlay" hidden aria-hidden="true"></div>
 
+    <!-- Scripts em ordem de dependência -->
     <script src="js/model.js"></script>
     <script src="js/view.js"></script>
     <script src="js/controller.js"></script>
