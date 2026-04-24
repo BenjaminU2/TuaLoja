@@ -242,26 +242,29 @@
     }
 
     #btn-encerrar {
-  margin-top: 14px;
-  width: 100%;
-  padding: 12px;
-  background: linear-gradient(135deg, #ff2e2e, #ff0000); /* 🔥 vermelho vibrante */
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.1s, box-shadow 0.1s;
-}
+      margin-top: 14px;
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, #ff2e2e, #ff0000);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.1s, box-shadow 0.1s;
+    }
 
-#btn-encerrar:hover {
-  background: linear-gradient(135deg, #ff0000, #cc0000);
-  transform: scale(1.03);
-  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
+    #btn-encerrar:hover {
+      background: linear-gradient(135deg, #ff0000, #cc0000);
+      transform: scale(1.03);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    }
 
-    #btn-encerrar:hover { background-color: #c0392b; }
+    /* Pequena alteração estética no hover do botão encerrar */
+    #btn-encerrar:active {
+      transform: scale(0.97);
+    }
 
     @media (max-width: 680px) {
       main { grid-template-columns: 1fr; padding: 16px; }
@@ -275,7 +278,7 @@
     <div>
       <h1>Loja Online — Carrinho de Compras</h1>
     </div>
-    <span class="badge-ls">💾 localStorage activo</span>
+    <span class="badge-ls">💾 localStorage activo</span> <!-- Pequena correcgção ortográfica -->
   </header>
 
   <main>
