@@ -81,3 +81,59 @@ function inicializar() {
 
 // Inicializar quando a página carregar
 window.addEventListener("load", inicializar);
+
+// ============================================================
+//  CONTROLLER (PARTE 2) — Sidebar do carrinho
+// ============================================================
+
+// Elementos do sidebar
+const btnCarrinho = document.getElementById('btn-carrinho');
+const carrinhoSidebar = document.getElementById('carrinho-sidebar');
+
+// Criar overlay
+const overlay = document.createElement('div');
+overlay.className = 'overlay';
+document.body.appendChild(overlay);
+
+// Criar botão de fechar dentro do sidebar
+const btnFechar = document.createElement('button');
+btnFechar.className = 'fechar-carrinho';
+btnFechar.innerHTML = '✕';
+carrinhoSidebar.insertBefore(btnFechar, carrinhoSidebar.firstChild);
+
+// Funções do sidebar
+function abrirCarrinho() {
+  carrinhoSidebar.classList.add('aberto');
+  overlay.classList.add('ativo');
+  document.body.style.overflow = 'hidden';
+}
+
+function fecharCarrinho() {
+  carrinhoSidebar.classList.remove('aberto');
+  overlay.classList.remove('ativo');
+  document.body.style.overflow = '';
+}
+
+// Eventos do sidebar
+btnCarrinho.addEventListener('click', abrirCarrinho);
+btnFechar.addEventListener('click', fecharCarrinho);
+overlay.addEventListener('click', fecharCarrinho);
+
+// Atualizar contador do ícone do carrinho
+function atualizarContadorCarrinho() {
+  const contador = document.getElementById('carrinho-count');
+  if (contador) {
+    const total = totalQuantidade();
+    contador.textContent = total;
+  }
+}
+
+// Sobrescrever a função actualizarVista original para incluir o contador
+const originalActualizarVista = actualizarVista;
+window.actualizarVista = function() {
+  originalActualizarVista();
+  atualizarContadorCarrinho();
+};
+
+// Reinicializar para garantir que o contador funcione
+actualizarVista = window.actualizarVista;

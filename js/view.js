@@ -131,3 +131,15 @@ function limparFormulario() {
   document.getElementById("input-nome-erro").innerText = "";
   document.getElementById("input-preco-erro").innerText = "";
 }
+
+// ============================================================
+//  VIEW (PARTE 2) — Função extra para sidebar
+// ============================================================
+
+// Função para atualizar apenas o contador do sidebar
+function atualizarContadorSidebar() {
+  const contador = document.getElementById('carrinho-count');
+  if (contador) {
+    contador.textContent = totalQuantidade();
+  }
+}
