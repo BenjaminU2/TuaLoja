@@ -42,7 +42,7 @@ function renderizarProdutos(produtos) {
 
     // Elemento do nome do produto
     let spanNome = document.createElement("span");
-    spanNome.innerText = p.nome;
+    spanNome.innerHTML = `<span class="produto-nome-link">${p.nome}</span>`;
     spanNome.className = "produto-nome";
 
     // Elemento do preço formatado para 2 casas decimais
@@ -213,4 +213,41 @@ function limparFormulario() {
   // Remove mensagens de erro
   document.getElementById("input-nome-erro").innerText = "";
   document.getElementById("input-preco-erro").innerText = "";
+}
+
+/**
+ * Renderiza o modal com detalhes completos de um produto
+ * @param {Object} produto - Objeto produto com {id, nome, preco}
+ * 
+ * Mostra informações detalhadas do produto:
+ * - Nome, preço em destaque
+ * - ID do produto (para referência)
+ * - Data de cadastro (convertida do timestamp)
+ */
+function renderizarModalProduto(produto) {
+  let body = document.getElementById("modal-produto-body");
+  body.innerHTML = `
+    <div class="produto-detalhe">
+      <h3>${produto.nome}</h3>
+      <p class="preco-grande">MT ${produto.preco.toFixed(2)}</p>
+      <div class="info-adicional">
+        <p><strong>ID do Produto:</strong> ${produto.id}</p>
+        <p><strong>Data de Cadastro:</strong> ${new Date(produto.id).toLocaleString('pt-MZ')}</p>
+        <p style="margin-top: 15px; font-style: italic; color: #888;">
+          ✨ Clique em "+ Carrinho" na lista para adicionar este produto ao carrinho
+        </p>
+      </div>
+      <button 
+        class="btn-primario" 
+        onclick="adicionarProdutoDoModal(${produto.id})"
+        style="margin-top: 20px;"
+      >
+        🛒 Adicionar ao Carrinho
+      </button>
+    </div>
+  `;
+  
+  // Mostrar modal e overlay
+  document.getElementById("modal-produto").removeAttribute("hidden");
+  document.getElementById("overlay-modal").removeAttribute("hidden");
 }

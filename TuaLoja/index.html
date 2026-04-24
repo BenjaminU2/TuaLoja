@@ -3,34 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AzureMart Store — Carrinho de Compras | TG1 ASI 2026</title>
+    <title>TuaLoja Online — Carrinho de Compras | TG1 ASI 2026</title>
     
-    <!-- Meta tags para SEO e compartilhamento -->
     <meta name="description" content="TG1 ASI 2026 - Sistema de Carrinho de Compras com MVC e localStorage" />
     <meta name="author" content="ISUTC · ASI 2026" />
     <meta name="theme-color" content="#1a3a5c" />
     
-    <!-- Preload da fonte para melhor performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
-    <!-- ============================== -->
-    <!-- CABEÇALHO PRINCIPAL            -->
-    <!-- ============================== -->
     <header>
       <div class="header-info">
         <h1>
           <span class="logo-icon" aria-hidden="true">🛒</span>
-          AzureMart Store
+          TuaLoja Online
         </h1>
         <p class="header-subtitle">
           TG1 · ASI 2026 · ISUTC · Docente: Ivan Ruby · Padrão MVC
         </p>
       </div>
       
-      <!-- Botão do carrinho com contador -->
       <button 
         id="btn-carrinho" 
         class="carrinho-icon" 
@@ -43,14 +37,8 @@
     </header>
 
     <main>
-      <!-- ============================== -->
-      <!-- COLUNA ESQUERDA                -->
-      <!-- ============================== -->
       <div class="coluna">
         
-        <!-- =========================== -->
-        <!-- FORMULÁRIO DE CADASTRO      -->
-        <!-- =========================== -->
         <section aria-labelledby="titulo-cadastro">
           <h2 id="titulo-cadastro">📦 Cadastrar Produto</h2>
           
@@ -99,7 +87,6 @@
               Adicionar Produto
             </button>
             
-            <!-- Mensagem de feedback (sucesso/erro) -->
             <p 
               id="mensagem-global" 
               class="mensagem-feedback" 
@@ -114,13 +101,9 @@
           </form>
         </section>
 
-        <!-- =========================== -->
-        <!-- LISTA DE PRODUTOS           -->
-        <!-- =========================== -->
         <section aria-labelledby="titulo-produtos">
           <h2 id="titulo-produtos">🏪 Produtos Disponíveis</h2>
           
-          <!-- Mensagem para leitores de tela quando lista é atualizada -->
           <div id="sr-anuncio" class="sr-only" role="status" aria-live="polite"></div>
           
           <ul 
@@ -132,9 +115,16 @@
       </div>
     </main>
 
-    <!-- ============================== -->
-    <!-- SIDEBAR DO CARRINHO            -->
-    <!-- ============================== -->
+    <!-- MODAL DE DETALHES DO PRODUTO -->
+    <div id="modal-produto" class="modal" role="dialog" aria-modal="true" hidden>
+      <div class="modal-conteudo">
+        <button class="fechar-modal" id="fechar-modal-produto" aria-label="Fechar detalhes do produto">✕</button>
+        <div id="modal-produto-body"></div>
+      </div>
+    </div>
+    <div id="overlay-modal" class="overlay" hidden aria-hidden="true"></div>
+
+    <!-- SIDEBAR DO CARRINHO -->
     <aside 
       id="carrinho-sidebar" 
       class="carrinho-sidebar" 
@@ -143,7 +133,6 @@
       aria-modal="true"
       hidden
     >
-      <!-- Botão para fechar o carrinho -->
       <button 
         class="fechar-carrinho" 
         id="fechar-carrinho"
@@ -156,6 +145,7 @@
       <section aria-labelledby="titulo-carrinho">
         <h2 id="titulo-carrinho">🛒 Carrinho de Compras</h2>
         
+        <!-- Mini cart com scroll melhorado -->
         <ul 
           id="lista-carrinho" 
           aria-label="Itens no carrinho"
@@ -183,10 +173,8 @@
       </section>
     </aside>
     
-    <!-- Overlay para quando o carrinho está aberto -->
-    <div id="overlay" class="overlay" hidden aria-hidden="true"></div>
+    <div id="overlay-carrinho" class="overlay" hidden aria-hidden="true"></div>
 
-    <!-- Scripts em ordem de dependência -->
     <script src="js/model.js"></script>
     <script src="js/view.js"></script>
     <script src="js/controller.js"></script>
